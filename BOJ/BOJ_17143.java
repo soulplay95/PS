@@ -11,7 +11,7 @@
  * # 상어 클래스 배열 만들어서 상어 관리
  * # Queue<상어의 인덱스>[][]로 map 관리
  * @comment
- * 
+ * # 더 빠르게 리팩토링 하기 => 상어 이동할 때 한 칸씩 말고 한번에 이동하는 처리
  */
 
 import java.io.*;
@@ -203,6 +203,7 @@ public class BOJ_17143 {
 
 			int size = sharks[index].z;
 			if (max < size) {
+				max = size;
 				maxIndex = i;
 			}
 		}
