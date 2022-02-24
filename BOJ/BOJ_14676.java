@@ -83,8 +83,18 @@ public class BOJ_14676 {
 
     static boolean isPossible(int command, int vertex) {
         if (command == 1) { // 건설
-            if (possible[vertex]) { // 건설 가능하면
+            if (possible[vertex] && indegree[vertex] == 0) { // 건설 가능하면
                 counts[vertex]++; // 건설 개수 증가시킴
+                if (counts[vertex] >= 2) {
+                    return true;
+                }
+                // 해당 건물을 그래프에서 삭제 시키는 효과를 통해 인접한 건물들의 indegree를 감소
+                for (int adjVertex : adjList[vertex]) {
+                    indegree[adjVertex]--;
+                    if (indegree[adjVertex] == 0) {
+                        possible[adjVertex] = true;
+                    }
+                }
                 return true;
             } else {
                 return false;
@@ -97,6 +107,7 @@ public class BOJ_14676 {
                 // 바로 인접한 건물들은 더이상 지을 수 없게 된다.
                 for (int adjVertex : adjList[vertex]) {
                     possible[adjVertex] = false;
+                    indegree[adjVertex]++;
                 }
             }
 
