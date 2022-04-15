@@ -1,0 +1,71 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    static StringBuilder sb = new StringBuilder();
+
+    static class Element implements Comparable<Element> {
+        int index, value; // index: A 배열의 인덱스를 저장, value: A[index]의 값
+
+        public Element(int index, int value) {
+            this.index = index;
+            this.value = value;
+        }
+
+        @Override
+        public int compareTo(Element other) {
+            // value 기준 비 내림차순
+            if (this.value != other.value) {
+                return this.value - other.value;
+            }
+            // value가 같으면 index 기준 오름차순
+            return this.index - other.index;
+        }
+    }
+
+    static int N;
+    static Element[] B;
+    static int[] P;
+
+    public static void main(String[] args) throws IOException {
+        input();
+        solve();
+        print();
+    }
+
+    static void input() throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
+
+        N = Integer.parseInt(br.readLine());
+        // init
+        B = new Element[N];
+        P = new int[N];
+
+        st = new StringTokenizer(br.readLine(), " ");
+        for (int i = 0; i < N; i++) {
+            int value = Integer.parseInt(st.nextToken());
+            B[i] = new Element(i, value);
+        }
+    }
+
+    static void solve() {
+        // B 배열 정렬
+        Arrays.sort(B);
+
+        // P 배열 채우기
+        for (int bIndex = 0; bIndex < N; bIndex++) {
+            P[B[bIndex].index] = bIndex;
+        }
+    }
+
+    static void print() {
+        for (int i = 0; i < N; i++) {
+            sb.append(P[i]).append(" ");
+        }
+
+        System.out.println(sb.toString());
+    }
+
+}
